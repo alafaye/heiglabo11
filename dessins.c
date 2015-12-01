@@ -61,7 +61,7 @@ void dessin_rectangle(int largeur, int hauteur){
 
 
 /*
- * Desson d'un triangle dont on spécifie la hauteur
+ * Dessin d'un triangle dont on spécifie la hauteur
  */
 void dessin_triangle(int hauteur){
     int iter_hauteur, iter_largeur;
@@ -124,7 +124,10 @@ void dessin_triangle(int hauteur){
 	valeurs_sinus = NULL;
     }
 
-void dessin_sinus_complique(int amplitude, int periode){
+/*
+ * Dessin d'un sinus vertical avec système d'axes
+ */
+void dessin_sinus_vertical(int amplitude, int periode){
     int iter_horizontal, iter_vertical;
     double *valeurs_sinus;
 

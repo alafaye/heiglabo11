@@ -23,11 +23,18 @@
 #include "dessins.h"
 
 int main(void){
+    int largeur, hauteur, amplitude;
     printf("Labo pour dessiner un carré, un triangle ou un sinus.\n");
-    dessin_rectangle(10, 10);
-    dessin_triangle(10);
-    dessin_sinus_horizontal(40,40);
-    dessin_sinus_complique(20,40);
+
+    largeur = lire_entier("Entrez la largeur du rectangle : ");
+    hauteur = lire_entier("Entrez la hauteur du rectangle : ");
+    dessin_rectangle(largeur, hauteur);
+    hauteur = lire_entier("Entrez la hauteur du triangle : ");
+    dessin_triangle(hauteur);
+    amplitude = lire_entier("Entrez l'amplitude du sinus horizontal : ");
+    dessin_sinus_horizontal(amplitude, 40);
+    amplitude = lire_entier("Entrez l'amplitude du sinus vertical : ");
+    dessin_sinus_vertical(amplitude, 40);
 
 
     return EXIT_SUCCESS;
