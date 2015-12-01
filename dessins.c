@@ -15,7 +15,7 @@ void dessin_ligne_horizontale(int largeur){
     int iterateur;
 
     /* Partie destinée a créer la ligne du haut/bas */
-    for(iterateur = 0; iterateur < largeur-1; iterateur++){
+    for(iterateur = 0; iterateur < largeur; iterateur++){
 	printf("-");
     }
     printf("\n");
@@ -46,11 +46,11 @@ void dessin_rectangle(int largeur, int hauteur){
     dessin_ligne_horizontale(largeur);
 
     /* Boucle pour l'itération verticale */
-    for(iterateur_hauteur = 0; iterateur_hauteur < hauteur; iterateur_hauteur++){
+    for(iterateur_hauteur = 0; iterateur_hauteur < hauteur-2; iterateur_hauteur++){
 
 	/* Partie destinée a créer la ligne du milieu*/
 	printf("|");
-	for(iterateur_largeur = 0; iterateur_largeur < largeur-3; iterateur_largeur++){
+	for(iterateur_largeur = 0; iterateur_largeur < largeur-2; iterateur_largeur++){
 	    printf(" ");
 	}
 	printf("|\n");
@@ -77,7 +77,7 @@ void dessin_triangle(int hauteur){
 	dessin_ligne_triangle(2*iter_hauteur);
     }
 
-    dessin_ligne_horizontale(largeur);
+    dessin_ligne_horizontale(largeur-1);
 }
 
 
@@ -85,30 +85,89 @@ void dessin_triangle(int hauteur){
  * Dessin d'un sinus horizontal
  * On peut choisir sa hauteur et son amplitude
  */
-void dessin_sinus_horizontal(int amplitude, int periode){
+    void dessin_sinus_horizontal(int amplitude, int periode){
+	int iter_horizontal, iter_vertical;
+	double *valeurs_sinus;
+
+	/* Allocation d'un tableau de taille suffisante pour stocker
+	 * les valeurs du sinus sur la période
+	 */
+	valeurs_sinus = malloc(periode*sizeof(double*));
+	if(valeurs_sinus==NULL){
+	    fprintf(stderr,"Allocation impossible");
+	}
+	else{
+	    /* Pour remplir le tableau des valeurs en chaque point*/
+	    for(iter_vertical = 0; iter_vertical <= periode; iter_vertical++){
+		valeurs_sinus[iter_vertical] = sin(iter_vertical/(2*M_PI)) * amplitude + amplitude;
+	    }
+
+	    /*
+	     * Dessin du sinus
+	     */
+	    for(iter_vertical = 0; iter_vertical <= periode; iter_vertical++){
+		for(iter_horizontal = 0;
+			iter_horizontal < valeurs_sinus[iter_vertical];
+			iter_horizontal++){
+
+		    printf(" ");
+
+		}
+		printf("*\n");
+	    }
+	}
+
+	/*
+	 * Libération de la mémoire
+	 */
+	free(valeurs_sinus);
+	valeurs_sinus = NULL;
+    }
+
+void dessin_sinus_complique(int amplitude, int periode){
     int iter_horizontal, iter_vertical;
     double *valeurs_sinus;
-    valeurs_sinus = malloc(periode*sizeof(double*));
-    if(valeurs_sinus==NULL){
+
+    /* Allocation d'un tableau de taille suffisante pour stocker
+     * les valeurs du sinus sur la période
+     */
+    valeurs_sinus=malloc(periode*sizeof(double*));
+    if(valeurs_sinus == NULL){
 	fprintf(stderr,"Allocation impossible");
     }
     else{
-	/* Pour remplir le tableau des valeurs en chaque point*/
-	for(iter_vertical = 0; iter_vertical <= periode; iter_vertical++){
-	    valeurs_sinus[iter_vertical] = sin(iter_vertical/(2*M_PI)) * amplitude + amplitude;
+	/* Evaluation du sinus sur la periode*/
+	for(iter_horizontal = 0; iter_horizontal <= periode; iter_horizontal++){
+	    valeurs_sinus[iter_horizontal] = sin(iter_horizontal/(2*M_PI)) * amplitude + amplitude;
+
 	}
 
-	for(iter_vertical = 0; iter_vertical <= periode; iter_vertical++){
-	    for(iter_horizontal = 0;
-		    iter_horizontal < valeurs_sinus[iter_vertical];
-		    iter_horizontal++){
-
-		printf(" ");
-
+	/* Dessin du sinus */
+	for(iter_vertical = 0; iter_vertical < amplitude*2; iter_vertical++){
+	    /* L'axe des ordonnées */
+	    printf("|");
+	    for(iter_horizontal = 0; iter_horizontal < periode; iter_horizontal++){
+		/* Les étoiles represent les évaluation du sinus en chaque ordonée */
+		if((int)valeurs_sinus[iter_horizontal] == iter_vertical){
+		    printf("*");
+		}
+		else{
+		    /* Pour dessiner l'axe des abcisses */
+		    if(iter_vertical != amplitude){
+			printf(" ");
+		    }
+		    else{
+			printf("-");}
+		}
 	    }
-	    printf("*\n");
+	    /*Ne pas oublier de fermer la ligne*/
+	    printf("\n");
 	}
     }
+
+    /*
+     * Libération de la mémoire
+     */
     free(valeurs_sinus);
     valeurs_sinus = NULL;
 }

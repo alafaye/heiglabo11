@@ -26,7 +26,8 @@ int main(void){
     printf("Labo pour dessiner un carré, un triangle ou un sinus.\n");
     dessin_rectangle(10, 10);
     dessin_triangle(10);
-    dessin_sinus_horizontal(20,50);
+    dessin_sinus_horizontal(40,40);
+    dessin_sinus_complique(20,40);
 
 
     return EXIT_SUCCESS;
