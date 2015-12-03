@@ -97,7 +97,9 @@ void dessin_triangle(int hauteur){
 	    fprintf(stderr,"Allocation impossible");
 	}
 	else{
-	    /* Pour remplir le tableau des valeurs en chaque point*/
+	    /* Pour remplir le tableau des valeurs en chaque point
+	     * Il est décalé de son amplitude pour éviter les valeurs négatives.
+	     */
 	    for(iter_vertical = 0; iter_vertical <= periode; iter_vertical++){
 		valeurs_sinus[iter_vertical] = sin(iter_vertical/(2*M_PI)) * amplitude + amplitude;
 	    }
@@ -107,7 +109,7 @@ void dessin_triangle(int hauteur){
 	     */
 	    for(iter_vertical = 0; iter_vertical <= periode; iter_vertical++){
 		for(iter_horizontal = 0;
-			iter_horizontal < valeurs_sinus[iter_vertical];
+			iter_horizontal <= floor(valeurs_sinus[iter_vertical])+0.5;
 			iter_horizontal++){
 
 		    printf(" ");
@@ -138,8 +140,11 @@ void dessin_sinus_vertical(int amplitude, int periode){
     if(valeurs_sinus == NULL){
 	fprintf(stderr,"Allocation impossible");
     }
+
     else{
-	/* Evaluation du sinus sur la periode*/
+	/* Evaluation du sinus sur la periode
+	 * Il est décalé de son amplitude pour éviter les amplitudes négatives.
+	 */
 	for(iter_horizontal = 0; iter_horizontal <= periode; iter_horizontal++){
 	    valeurs_sinus[iter_horizontal] = sin(iter_horizontal/(2*M_PI)) * amplitude + amplitude;
 

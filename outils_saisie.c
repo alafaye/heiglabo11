@@ -32,7 +32,6 @@
 int vide_ligne (void){
 
     while(getchar() != '\n'){
-	
     }
     return EXIT_SUCCESS;
 }
